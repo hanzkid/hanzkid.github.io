@@ -1,4 +1,3 @@
-const imgPath = 'https://image.tmdb.org/t/p/original/';
 let movieWishList;
 if(localStorage.wishList){
     movieWishList =  JSON.parse(localStorage.wishList).movies;
