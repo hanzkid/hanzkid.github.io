@@ -89,6 +89,6 @@ function addToWishList(movie){
 
     wishList.movies.push(movie);
 
-    localStorage.setItem('wishList',wishList);
+    localStorage.setItem('wishList',JSON.stringify(wishList));
 
 }
