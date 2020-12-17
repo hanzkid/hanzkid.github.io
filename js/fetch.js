@@ -2,7 +2,10 @@ const apiKey = 'c3fd6f0f39760614747cf702d6c44b11';
 const apiUrl = 'https://api.themoviedb.org';
 const imgPath = 'https://image.tmdb.org/t/p/original/';
 const urlParams = new URLSearchParams(window.location.search);
-
+let movieWishList;
+if(localStorage.wishList){
+    movieWishList =  JSON.parse(localStorage.wishList).movies;
+}
 //mendapatkan data genre
 if(!localStorage.genre){
     fetch(`${apiUrl}/3/genre/movie/list?api_key=${apiKey}&language=en-US`).then(function(response){
@@ -32,15 +35,36 @@ function renderMovie(movie, index,movieList){
 
     let yearRelease = movie.release_date.split('-')[0];
     movieCard+= `<img src="${imgPath}${movie.poster_path}" style="width:100%;"/>`
-    movieCard+= `<span class="titleMovie">${movie.title}<br /> ( ${yearRelease} )</span><br>`;
+    movieCard+= `<span class="titleMovie">${movie.title}<br /> ( ${yearRelease} )</span></a><br>`;
 
     movieCard+= `<div class="genre">`;
+
+    let essentialData = {
+        title : movie.title.replace("'","petiksatudiilangin"),
+        cover : movie.poster_path,
+        genre : [],
+        year : yearRelease,
+        id : movie.id
+    }
+
     for(let i=0;i<movie.genre_ids.length;i++){
         let genre_id = movie.genre_ids[i];
         let genre = JSON.parse(localStorage.getItem("genre")).genres.find(o => o.id === genre_id);
-        movieCard+= `<div class="genreMovie">${genre.name}</div>`
+        movieCard+= `${genre.name}`
+        essentialData.genre.push(genre.name);
+        if(i != movie.genre_ids.length-1)
+            movieCard += ', '
     }
-    movieCard+= `</a><button type="button" onClick='addToWishList(${JSON.stringify(movie)})' class="addToWishList">WishList</button>`
+    let notInList = true;
+    if(movieWishList){
+        let inList = movieWishList.find(m => m.id == movie.id);
+
+        if(inList) 
+            notInList = false;
+    }
+    if(notInList){
+        movieCard+= `<button type="button" onClick='addToWishList(this,${JSON.stringify(essentialData)})' class="addToWishList">WishList</button>`
+    }
     movieCard+= `</div>`;
 
     movieContainer.insertAdjacentHTML('beforeend', movieCard);
@@ -58,7 +82,7 @@ function renderMovie(movie, index,movieList){
 
 //mendapatkan data film
 (function () {
-    fetch(`${apiUrl}/3/movie/popular?api_key=${apiKey}&language=en-US&page=${page}`)
+    fetch(`${apiUrl}/3/movie/now_playing?api_key=${apiKey}&language=en-US&page=${page}`)
     .then(
         function(response) {
           if (response.status !== 200) {
@@ -80,15 +104,16 @@ function renderMovie(movie, index,movieList){
 
 
 //menambah ke wishlist
-function addToWishList(movie){
+function addToWishList(el,movie){
     let wishList = {"movies" : []};
 
-    if(localStorage.wishList){
-        wishList.movies = JSON.parse(localStorage.wishList);
+    if(movieWishList){
+        wishList.movies = movieWishList;
     }
-
     wishList.movies.push(movie);
 
     localStorage.setItem('wishList',JSON.stringify(wishList));
+
+    el.remove();
 
 }
