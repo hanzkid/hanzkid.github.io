@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@1,300&display=swap');
 
 * {
   margin: 0;
@@ -6,7 +7,9 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
-
+a{
+  text-decoration: none;
+}
 html,
 body {
   min-height: 100% !important;
@@ -14,7 +17,12 @@ body {
   scroll-behavior: smooth;
   background-color: #2b2b31;
 }
-
+#logoName{
+  font-family: 'Consolas', cursive;
+  color: #fff;
+  font-size: 24px;
+  
+}
 #header{
   height: 90px;
   position: fixed;
@@ -25,7 +33,9 @@ body {
   box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.4);
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  z-index: 9999;
+  padding: 0 216px 0 180px;
 }
 
 nav ul {
@@ -63,6 +73,7 @@ nav ul li{
   max-width: 16%;
   /* max-width: 16em; */
   margin: 0 16px 0px 16px;
+  position: relative;
 }
 
 .titleMovie{
@@ -74,6 +85,7 @@ nav ul li{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  margin-bottom: 64px;
 }
 
 .genreMovie{
@@ -99,4 +111,20 @@ nav ul li{
   transition: background-color .3s;
   border: 1px solid #ddd;
   margin: 0 16px;
+}
+
+.addToWishList{
+  flex: 1 1 100%;
+  padding: 8px;
+  width: 100%;
+  text-align: center;
+  text-transform: uppercase;
+  color: white;
+ /* text-shadow: 0px 0px 10px rgba(0,0,0,0.2);*/
+  border-radius: 10px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: red;
+  cursor: pointer;
 }
