@@ -244,7 +244,7 @@ nav ul li a{
   top: 0 !important;
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 1000px) {
   .mobile-overlay{
     display: grid !important;
   }
