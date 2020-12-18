@@ -240,6 +240,7 @@ nav ul li a{
   background: white;
   text-align: center;
   place-items: center center;
+  z-index: 99999;
 }
 
 @media screen and (max-width: 720px) {
